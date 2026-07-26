@@ -14,16 +14,24 @@
     "open:android": "node internal/module_scripts/open-android.js"
   },
   "keywords": [
-    "react-native",
     "expo",
-    "expo-usb-devices",
-    "UsbDevices"
+    "react-native",
+    "android",
+    "usb",
+    "hid",
+    "barcode-scanner",
+    "peripheral",
+    "input-device",
+    "usb-device",
+    "device-detection",
+    "kiosk",
+    "pos"
   ],
   "repository": "https://github.com/ThorANilsson/expo-usb-devices",
   "bugs": {
     "url": "https://github.com/ThorANilsson/expo-usb-devices/issues"
   },
-  "author": "ThorANilsson <thor.a.nilsson@gmail.com> (https://github.com/ThorANilsson)",
+  "author": "Thor Nilsson <thor.a.nilsson@gmail.com> (https://github.com/ThorANilsson)",
   "license": "MIT",
   "homepage": "https://github.com/ThorANilsson/expo-usb-devices#readme",
   "dependencies": {},
