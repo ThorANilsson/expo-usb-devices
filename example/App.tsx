@@ -1,37 +1,56 @@
-import UsbDevices from 'expo-usb-devices';
-import { useEvent } from 'expo';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { UsbDevice, useUsbDevices } from 'expo-usb-devices';
+import { ScrollView, Text, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
-  const onChangePayload = useEvent(UsbDevices, 'onChange');
+  return (
+    <SafeAreaProvider>
+      <DeviceList />
+    </SafeAreaProvider>
+  );
+}
+
+function DeviceList() {
+  const devices = useUsbDevices();
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
-        <Text style={styles.header}>Module API Example</Text>
-        <Group name="Functions">
-          <Text>{UsbDevices.hello()}</Text>
-        </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
+        <Text style={styles.header}>Connected devices ({devices.length})</Text>
+        {devices.map((device) => (
+          <Device key={device.id} device={device} />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-function Group(props: { name: string; children: React.ReactNode }) {
+function Device({ device }: { device: UsbDevice }) {
   return (
-    <View style={styles.group}>
-      <Text style={styles.groupHeader}>{props.name}</Text>
-      {props.children}
+    <View style={styles.device}>
+      <Text style={styles.name}>{device.name}</Text>
+      <Text style={styles.detail}>vendorId: {hex(device.vendorId)}</Text>
+      <Text style={styles.detail}>productId: {hex(device.productId)}</Text>
+      <Text style={styles.detail}>keyboard: {String(device.isKeyboard)}</Text>
+      <Text style={styles.detail}>enabled: {String(device.isEnabled)}</Text>
+      {device.usb ? (
+        <Text style={styles.detail}>
+          {`usb ${device.usb.manufacturerName ?? '?'} ${device.usb.productName ?? '?'}`}
+        </Text>
+      ) : null}
+
+      <Text style={styles.mono}>{device.descriptor}</Text>
     </View>
   );
 }
 
+const hex = (id: number) => id.toString(16).padStart(4, '0');
+
 const styles = {
-  header: { fontSize: 30, margin: 20 },
-  groupHeader: { fontSize: 20, marginBottom: 20 },
-  group: { margin: 20, backgroundColor: '#fff', borderRadius: 10, padding: 20 },
   container: { flex: 1, backgroundColor: '#eee' },
-  view: { flex: 1, height: 200 },
+  header: { fontSize: 30, margin: 20 },
+  device: { margin: 20, marginTop: 0, backgroundColor: '#fff', borderRadius: 10, padding: 20 },
+  name: { fontSize: 18, marginBottom: 4 },
+  detail: { fontSize: 13, color: '#555' },
+  mono: { fontFamily: 'monospace', fontSize: 10, marginTop: 8, color: '#999' },
 };
