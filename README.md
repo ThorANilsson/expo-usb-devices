@@ -106,6 +106,18 @@ subscription.remove();
 | `interfaceProtocol` | `number` |
 | `endpointCount`     | `number` |
 
+## Quirks
+
+Some Android issues that were encountered during development of this module.
+
+### USB hubs can hide a device
+
+A device's USB hardware can run out of capacity when several devices share a hub. Android still sees the device but never opens it as an input so it goes missing from this list. It is always the device that connected last and only replugging it brings it back.
+
+### Plugging a device in can restart your screen
+
+Wireless keyboard and mouse dongles usually claim to have a D-pad for some reason. Android treats a D-pad appearing the same way it treats a screen rotation and restarts the screen you are on. When testing out the example app in this repo, this can lead to a crash-like error if debugging via adb. This does not seem to be an issue in production.
+
 ## License
 
 MIT
