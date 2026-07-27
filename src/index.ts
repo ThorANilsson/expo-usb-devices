@@ -2,3 +2,4 @@
 // and on native platforms to UsbDevicesModule.ts
 export { default } from './UsbDevicesModule';
 export * from './UsbDevices.types';
+export * from './useUsbDevices';
