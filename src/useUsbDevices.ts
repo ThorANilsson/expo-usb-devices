@@ -10,18 +10,26 @@ export function useUsbDevices(): UsbDevice[] {
   useEffect(() => {
     let mounted = true;
 
+    let issued = 0;
+    let newestApplied = 0;
+
+    const applyIfNewest = (reading: number, current: UsbDevice[]) => {
+      if (!mounted || reading < newestApplied) {
+        return;
+      }
+      newestApplied = reading;
+      setDevices(current);
+    };
+
     const reread = () => {
-      UsbDevicesModule.list().then((current) => {
-        if (mounted) {
-          setDevices(current);
-        }
-      });
+      const reading = ++issued;
+      UsbDevicesModule.list().then((current) => applyIfNewest(reading, current));
     };
 
     reread();
 
     const subscription = UsbDevicesModule.addListener('onChange', (event) => {
-      setDevices(event.devices);
+      applyIfNewest(++issued, event.devices);
     });
 
     const appState = AppState.addEventListener('change', (state) => {
