@@ -1,7 +1,7 @@
 <p>
   <a href="https://github.com/ThorANilsson/expo-usb-devices">
     <img
-      src="resources/expo-usb-devices-outlined-text.svg"
+      src="resources/expo-usb-devices-android-outlined-text.svg"
       alt="expo-usb-devices"
       height="64" />
   </a>
