@@ -3,7 +3,7 @@
     <img
       src="resources/expo-usb-devices-android-outlined-text.svg"
       alt="expo-usb-devices"
-      height="64" />
+      height="72" />
   </a>
 </p>
 
@@ -45,7 +45,7 @@ export default function ScannerStatus() {
 
 ## No permissions required
 
-Neither `InputDevice.getDeviceIds()` nor `UsbManager.getDeviceList()` require permission on Android. Consent is only needed to `openDevice()` which this library never does.
+Neither `InputDevice.getDeviceIds()` nor `UsbManager.getDeviceList()` require permission on Android. Consent is only needed to `openDevice()` which this module never does.
 
 ## API
 
