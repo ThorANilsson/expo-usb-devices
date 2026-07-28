@@ -53,7 +53,8 @@
     "preset": "jest-expo",
     "roots": [
       "<rootDir>/src"
-    ]
+    ],
+    "passWithNoTests": true
   },
   "peerDependencies": {
     "expo": "*",
