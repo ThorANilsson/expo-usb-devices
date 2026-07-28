@@ -75,16 +75,16 @@ subscription.remove();
 
 ### `UsbDevice`
 
-| Field        | Type              | Notes                                                                              |
-| ------------ | ----------------- | ---------------------------------------------------------------------------------- |
-| `id`         | `number`          | Stable key.                                                                        |
-| `name`       | `string`          | Can in some cases be very generic like "USB Adapter Device" for a barcode scanner. |
-| `vendorId`   | `number`          | Value embedded into the USB device, such as "0x0483"                               |
-| `productId`  | `number`          | Value embedded into the USB device, such as "0x0011"                               |
-| `descriptor` | `string`          | Stable key after replug and reboot. Identical units may share one.                 |
-| `isEnabled`  | `boolean`         | False when the device is connected but disabled by the system.                     |
-| `isKeyboard` | `boolean`         | True for keyboards.                                                                |
-| `usb`        | `UsbInfo \| null` | Extra USB details. `null` for barcode scanners and most keyboards.                 |
+| Field        | Type              | Notes                                                                            |
+| ------------ | ----------------- | -------------------------------------------------------------------------------- |
+| `id`         | `number`          | Reassigned on every replug. Not a reliable key for that reason.                  |
+| `name`       | `string`          | Can be very generic. A barcode scanner may just report "USB Adapter USB Device". |
+| `vendorId`   | `number`          | Fixed per model such as `0x0483`.                                                |
+| `productId`  | `number`          | Fixed per model such as `0x0011`.                                                |
+| `descriptor` | `string`          | Same between replug and reboot but identical units can share the same value.     |
+| `isEnabled`  | `boolean`         | False when the device is connected but disabled by the system.                   |
+| `isKeyboard` | `boolean`         | True for keyboards and for barcode scanners that type what they scan.            |
+| `usb`        | `UsbInfo \| null` | Extra USB details.                                                               |
 
 ### `UsbInfo`
 
