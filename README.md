@@ -7,6 +7,8 @@
   </a>
 </p>
 
+[![Compile module](https://github.com/ThorANilsson/expo-usb-devices/actions/workflows/ci.yml/badge.svg)](https://github.com/ThorANilsson/expo-usb-devices/actions/workflows/ci.yml)
+
 Lists USB input devices that are connected to an Android device. Originally built for a point-of-sale app that needed to know whether the barcode scanner is plugged in properly.
 
 > **Android only.** Usage on iOS or web returns an empty list.

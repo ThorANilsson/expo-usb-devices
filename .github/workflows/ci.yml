@@ -1,4 +1,4 @@
-name: CI
+name: Compile module
 
 on:
   push:
