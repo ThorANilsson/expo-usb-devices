@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    name: Compile Android module
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            example/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - run: npm ci
+
+      - run: npm ci
+        working-directory: example
+
+      - run: npx expo prebuild --platform android --no-install
+        working-directory: example
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: example/android
+
+      - run: ./gradlew :expo-usb-devices:compileDebugKotlin
+        working-directory: example/android
