@@ -13,13 +13,17 @@ import expo.modules.kotlin.modules.ModuleDefinition
 private val PLACEHOLDER_VENDOR_IDS = setOf(0x0000, 0x0001)
 
 class UsbDevicesModule : Module() {
-  private val context: Context
-    get() = requireNotNull(appContext.reactContext)
+  private val context: Context?
+    get() = try {
+      appContext.reactContext
+    } catch (destroyed: IllegalArgumentException) {
+      null
+    }
 
   private val handler = Handler(Looper.getMainLooper())
 
-  private val inputManager: InputManager
-    get() = context.getSystemService(Context.INPUT_SERVICE) as InputManager
+  @Volatile
+  private var observedInputManager: InputManager? = null
 
   private val deviceListener = object : InputManager.InputDeviceListener {
     override fun onInputDeviceAdded(deviceId: Int) = emitChange()
@@ -29,6 +33,17 @@ class UsbDevicesModule : Module() {
 
   private fun emitChange() {
     sendEvent("onChange", mapOf("devices" to peripherals()))
+  }
+
+  private fun startObserving() {
+    val manager = context?.getSystemService(Context.INPUT_SERVICE) as? InputManager ?: return
+    manager.registerInputDeviceListener(deviceListener, handler)
+    observedInputManager = manager
+  }
+
+  private fun stopObserving() {
+    observedInputManager?.unregisterInputDeviceListener(deviceListener)
+    observedInputManager = null
   }
 
   override fun definition() = ModuleDefinition {
@@ -41,11 +56,15 @@ class UsbDevicesModule : Module() {
     }
 
     OnStartObserving {
-      inputManager.registerInputDeviceListener(deviceListener, handler)
+      startObserving()
     }
 
     OnStopObserving {
-      inputManager.unregisterInputDeviceListener(deviceListener)
+      stopObserving()
+    }
+
+    OnDestroy {
+      stopObserving()
     }
   }
 
@@ -71,7 +90,9 @@ class UsbDevicesModule : Module() {
   }
 
   private fun usbDevicesByModel(): Map<Pair<Int, Int>, UsbDevice> {
-    val usbManager = context.getSystemService(Context.USB_SERVICE) as UsbManager
+    val usbManager = context?.getSystemService(Context.USB_SERVICE) as? UsbManager
+      ?: return emptyMap()
+
     return usbManager.deviceList.values.associateBy { it.vendorId to it.productId }
   }
 
