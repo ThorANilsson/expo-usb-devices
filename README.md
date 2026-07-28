@@ -112,7 +112,7 @@ Some Android issues that were encountered during development of this module.
 
 ### USB hubs can hide a device
 
-A device's USB hardware can run out of capacity when several devices share a hub. Android still sees the device but never opens it as an input so it goes missing from this list. It is always the device that connected last and only replugging it brings it back.
+A host device's USB hardware can run out of capacity when several devices share a hub. Android still sees the device but never opens it as an input so it goes missing from this list. It is always the device that connected last and only replugging it brings it back.
 
 ### Plugging a device in can restart your screen
 
