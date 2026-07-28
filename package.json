@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/ThorANilsson/expo-usb-devices/issues"
   },
-  "author": "Thor Nilsson <thor.a.nilsson@gmail.com> (https://github.com/ThorANilsson)",
+  "author": "Thor Anderberg Nilsson <thor.a.nilsson@gmail.com> (https://github.com/ThorANilsson)",
   "license": "MIT",
   "homepage": "https://github.com/ThorANilsson/expo-usb-devices#readme",
   "dependencies": {},
