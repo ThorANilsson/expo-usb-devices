@@ -1,7 +1,7 @@
 {
   "name": "expo-usb-devices",
   "version": "0.1.0",
-  "description": "Detect connected USB and HID input devices on Android",
+  "description": "Expo module for detecting connected USB input devices on Android.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
