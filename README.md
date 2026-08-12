@@ -8,6 +8,7 @@
 </p>
 
 [![Compile module](https://github.com/ThorANilsson/expo-usb-devices/actions/workflows/ci.yml/badge.svg)](https://github.com/ThorANilsson/expo-usb-devices/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/expo-usb-devices)](https://www.npmjs.com/package/expo-usb-devices)
 
 Lists USB input devices that are connected to an Android device. Originally built for a point-of-sale app that needed to know whether the barcode scanner is plugged in properly.
 
